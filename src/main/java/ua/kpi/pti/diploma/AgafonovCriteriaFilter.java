@@ -1,14 +1,32 @@
-package exponential_s_boxes;
+package ua.kpi.pti.diploma;
+
+import org.bouncycastle.pqc.math.linearalgebra.GF2mField;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static exponential_s_boxes.Constants.*;
 import static java.lang.Math.pow;
+import static ua.kpi.pti.diploma.Constants.*;
 
 public class AgafonovCriteriaFilter {
     private final int k = (int) pow(P, M - 1);
+
+
+    public static List<Integer> findAllPrimitiveElementsOfField() {
+        GF2mField gf2mField = new GF2mField(M);
+        ArrayList<Integer> primitiveElements = new ArrayList<>();
+
+        for (int i = 1; i < Q - 1; i++) {
+            int current = i;
+            boolean isPrimitive = Utils.decomposeNumberToPrimeMultipliers(Q - 1).stream()
+                    .allMatch(elem -> gf2mField.exp(current, (Q - 1) / elem) != 1);
+            if (isPrimitive) {
+                primitiveElements.add(i);
+            }
+        }
+        return primitiveElements;
+    }
 
     List<Integer> filterByOptimalDifferentialCharacteristics(List<Integer> primitiveBases) { //means characteristic that described by Agievich and Afonenko
         List<Integer> filteredExponents = new ArrayList<>();
@@ -24,16 +42,16 @@ public class AgafonovCriteriaFilter {
         return filteredExponents;
     }
 
-    List<Integer> filterByMaximumAlgebrianDegree(List<Integer> alphas) {
+    List<Integer> filterByMaximumAlgebraicDegree(List<Integer> alphas) {
         List<Integer> filteredAlphas = new ArrayList<>();
         for (Integer alpha : alphas) {
             int alphaForBasis = FIELD.mult(alpha, FIELD.inverse(FIELD.add(1, alpha)));
             List<Integer> vectors = new ArrayList<>();
             for (int i = 0; i < M; i++) {
                 vectors.add(FIELD.exp(alphaForBasis, (int) pow(2, i)));
-                if (Utils.rankIsNotZero(vectors)) {
-                    filteredAlphas.add(alpha);
-                }
+            }
+            if (Utils.rankIsNotZero(vectors)) {
+                filteredAlphas.add(alpha);
             }
         }
         return filteredAlphas;
