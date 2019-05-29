@@ -13,13 +13,43 @@ public class TablesProviderTest {
 
 
     @Test
-    public void rowsSumMustBeAsExpected() {
+    public void rowsSumMustBeAsExpected() throws Exception {
         AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
         List<Integer> alpas = agafonovCriteriaFilter.filterByOptimalDifferentialCharacteristics(AgafonovCriteriaFilter.findAllPrimitiveElementsOfField());
         alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
         int[][] matrix = provider.provideDDT(alpas);
-        int sum = 0;
+        for (int j = 0; j < matrix[0].length; j++) {
+            int sum = 0;
+            for (int i = 0; i < matrix[0].length; i++) {
+                sum += matrix[j][i];
+            }
+            if(sum!=EXPECTED_SUM){
+                throw new Exception();
+            }
+        }
 
-    assertEquals(EXPECTED_SUM,sum);
     }
+
+    @Test
+    public void columnsSumMustBeAsExpected() throws Exception {
+        AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
+        List<Integer> alpas = agafonovCriteriaFilter.filterByOptimalDifferentialCharacteristics(AgafonovCriteriaFilter.findAllPrimitiveElementsOfField());
+        alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
+        int[][] matrix = provider.provideDDT(alpas);
+        for (int j = 0; j < matrix[0].length; j++) {
+            int sum = 0;
+            for (int i = 0; i < matrix[0].length; i++) {
+                sum += matrix[i][j];
+            }
+            System.out.print(sum+" ");
+
+            if(sum!=EXPECTED_SUM){
+                throw new Exception();
+            }
+        }
+
+    }
+
+
+
 }
