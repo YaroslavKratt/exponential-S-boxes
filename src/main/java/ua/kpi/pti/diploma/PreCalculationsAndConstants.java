@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Constants {
+public abstract class PreCalculationsAndConstants {
     public static final int P = 2;//characteristic of field
     public static final int M = 8; //extension
     public static final int Q = (int) Math.pow(P, M);

@@ -6,6 +6,7 @@ import ua.kpi.pti.diploma.charts.BarChartForDDT;
 import ua.kpi.pti.diploma.charts.CustomBarChart;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -27,24 +28,14 @@ public class App {
         }
 
         TablesProvider provider = new TablesProvider();
-        Map<String,Integer[]> maxAndAlphasXorXor = provider.countAlphasforEachMaximum(provider.provideDdtXorXor(alpas));
-        Map<String,Integer[]> maxAndAlphasXorPlus = provider.countAlphasforEachMaximum(provider.provideDdtXorPlus(alpas));
-        Map<String,Integer[]> maxAndAlphasPlusPlus = provider.countAlphasforEachMaximum(provider.provideDdtPlusPlus(alpas));
+        Map<Integer,Integer> maxXorXor = provider.calculateStatistics(Collections.singletonList(alpas.get(0)));
 
 
         CustomBarChart<CategoryChart> xorXor = new BarChartForDDT();
-        CategoryChart xorXorChart = xorXor.getChart(maxAndAlphasXorXor.get("max"),maxAndAlphasXorXor.get("amountOfAlphas"));
+        CategoryChart xorXorChart = xorXor.getChart(maxXorXor.values().toArray(new Integer[0]),maxXorXor.keySet().toArray(new Integer[0]));
         new SwingWrapper<CategoryChart>(xorXorChart).displayChart();
 
-        CustomBarChart<CategoryChart> xorPlus = new BarChartForDDT();
-        CategoryChart xorPlusChart = xorPlus.getChart(maxAndAlphasXorPlus.get("max"),maxAndAlphasXorPlus.get("amountOfAlphas"));
-        xorPlusChart.setTitle("DDT XOR plus");
-        new SwingWrapper<CategoryChart>(xorPlusChart).displayChart();
 
-        CustomBarChart<CategoryChart> plusPlus = new BarChartForDDT();
-        CategoryChart plusPlusChart = plusPlus.getChart(maxAndAlphasPlusPlus.get("max"),maxAndAlphasPlusPlus.get("amountOfAlphas"));
-        plusPlusChart.setTitle("DDT + +");
-        new SwingWrapper<CategoryChart>(plusPlusChart).displayChart();
 
 
     }

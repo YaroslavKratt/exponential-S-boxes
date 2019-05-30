@@ -6,7 +6,7 @@ import java.io.IOException;
 public class MatrixToCSVPrinter {
 
     public static void printMatrixInHTML(int[][] matrix) throws IOException {
-        FileWriter writer =new FileWriter(ua.kpi.pti.diploma.Constants.FILE_NAME);
+        FileWriter writer =new FileWriter(PreCalculationsAndConstants.FILE_NAME);
 
         for (int i = 0; i < matrix.length; i++) {
 
