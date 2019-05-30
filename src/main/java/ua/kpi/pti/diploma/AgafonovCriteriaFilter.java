@@ -28,7 +28,7 @@ public class AgafonovCriteriaFilter {
         return primitiveElements;
     }
 
-    List<Integer> filterByOptimalDifferentialCharacteristics(List<Integer> primitiveBases) { //means characteristic that described by Agievich and Afonenko
+    public List<Integer> filterByOptimalDifferentialCharacteristics(List<Integer> primitiveBases) { //means characteristic that described by Agievich and Afonenko
         List<Integer> filteredExponents = new ArrayList<>();
         for (Integer alpha : primitiveBases) {
 
@@ -42,7 +42,7 @@ public class AgafonovCriteriaFilter {
         return filteredExponents;
     }
 
-    List<Integer> filterByMaximumAlgebraicDegree(List<Integer> alphas) {
+    public List<Integer> filterByMaximumAlgebraicDegree(List<Integer> alphas) {
         List<Integer> filteredAlphas = new ArrayList<>();
         for (Integer alpha : alphas) {
             int alphaForBasis = FIELD.mult(alpha, FIELD.inverse(FIELD.add(1, alpha)));
