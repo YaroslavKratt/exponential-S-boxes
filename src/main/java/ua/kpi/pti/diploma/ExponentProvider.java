@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.PreCalculationsAndConstants.FIELD;
+import static ua.kpi.pti.diploma.Constants.FIELD;
 
 public class ExponentProvider {
 

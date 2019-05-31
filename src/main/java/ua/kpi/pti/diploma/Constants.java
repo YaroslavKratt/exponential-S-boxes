@@ -7,14 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class PreCalculationsAndConstants {
+public abstract class Constants {
     public static final int P = 2;//characteristic of field
     public static final int M = 8; //extension
     public static final int Q = (int) Math.pow(P, M);
     public static final GF2mField FIELD = new GF2mField(M);
-    public static final String PATH_TO_XOR_XOR_FOLDER = "D:\\DIPLOMA\\Exponential_S_boxes\\DDT_XOR_XOR\\";
-    public static final String PATH_TO_XOR_PLUS_FOLDER = "D:\\DIPLOMA\\Exponential_S_boxes\\DDT_XOR_PLUS\\";
-    public static final String PATH_TO_PLUS_PLUS_FOLDER = "D:\\DIPLOMA\\Exponential_S_boxes\\DDT_PLUS_PLUS\\";
+    public static final String PATH_TO_XOR_XOR_FOLDER = ".\\DDT_XOR_XOR\\";
+    public static final String PATH_TO_XOR_PLUS_FOLDER = ".\\DDT_XOR_PLUS\\";
+    public static final String PATH_TO_PLUS_PLUS_FOLDER = ".\\DIPLOMA\\Exponential_S_boxes\\DDT_PLUS_PLUS\\";
 
     public static  Map<Integer, List<Integer>> allExponents = new HashMap<>();
     static{

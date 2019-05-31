@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.pow;
-import static ua.kpi.pti.diploma.PreCalculationsAndConstants.*;
+import static ua.kpi.pti.diploma.Constants.*;
 
 public class AgafonovCriteriaFilter {
     private final int k = (int) pow(P, M - 1);
