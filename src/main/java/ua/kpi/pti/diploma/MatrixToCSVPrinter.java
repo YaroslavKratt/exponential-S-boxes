@@ -5,8 +5,8 @@ import java.io.IOException;
 
 public class MatrixToCSVPrinter {
 
-    public static void printMatrixInHTML(int[][] matrix) throws IOException {
-        FileWriter writer =new FileWriter(PreCalculationsAndConstants.FILE_NAME);
+    public static void printMatrixToCSV(int[][] matrix, String fileName) throws IOException {
+        FileWriter writer =new FileWriter(fileName);
 
         for (int i = 0; i < matrix.length; i++) {
 

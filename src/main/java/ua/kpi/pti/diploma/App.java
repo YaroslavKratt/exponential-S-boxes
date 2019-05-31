@@ -6,7 +6,6 @@ import ua.kpi.pti.diploma.charts.BarChartForDDT;
 import ua.kpi.pti.diploma.charts.CustomBarChart;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,13 +27,14 @@ public class App {
         }
 
         TablesProvider provider = new TablesProvider();
-        Map<Integer,Integer> maxXorXor = provider.calculateStatistics(Collections.singletonList(alpas.get(0)));
+        Map<Integer,Integer> maxXorXor = provider.calculateStatistics(alpas);
 
+        System.out.println("\n"+maxXorXor.keySet());
+        System.out.println( maxXorXor.values());
 
         CustomBarChart<CategoryChart> xorXor = new BarChartForDDT();
-        CategoryChart xorXorChart = xorXor.getChart(maxXorXor.values().toArray(new Integer[0]),maxXorXor.keySet().toArray(new Integer[0]));
-        new SwingWrapper<CategoryChart>(xorXorChart).displayChart();
-
+        CategoryChart xorXorChart = xorXor.getChart(maxXorXor.keySet().toArray(new Integer[0]), maxXorXor.values().toArray(new Integer[0]));
+        new SwingWrapper(xorXorChart).displayChart();
 
 
 

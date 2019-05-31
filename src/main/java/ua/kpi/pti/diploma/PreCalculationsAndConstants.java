@@ -12,7 +12,10 @@ public abstract class PreCalculationsAndConstants {
     public static final int M = 8; //extension
     public static final int Q = (int) Math.pow(P, M);
     public static final GF2mField FIELD = new GF2mField(M);
-    public static final String FILE_NAME = "E:\\my projects\\exponential s-boxes\\table.csv";
+    public static final String PATH_TO_XOR_XOR_FOLDER = "D:\\DIPLOMA\\Exponential_S_boxes\\DDT_XOR_XOR\\";
+    public static final String PATH_TO_XOR_PLUS_FOLDER = "D:\\DIPLOMA\\Exponential_S_boxes\\DDT_XOR_PLUS\\";
+    public static final String PATH_TO_PLUS_PLUS_FOLDER = "D:\\DIPLOMA\\Exponential_S_boxes\\DDT_PLUS_PLUS\\";
+
     public static  Map<Integer, List<Integer>> allExponents = new HashMap<>();
     static{
         List<Integer> exponentsForCurrentBase;
