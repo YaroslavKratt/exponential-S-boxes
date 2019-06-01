@@ -2,8 +2,8 @@ package diploma;
 
 import org.junit.Test;
 import ua.kpi.pti.diploma.AgafonovCriteriaFilter;
-import ua.kpi.pti.diploma.ddt.DdtProvider;
-import ua.kpi.pti.diploma.ddt.DdtXorXor;
+import ua.kpi.pti.diploma.tables.TableProvider;
+import ua.kpi.pti.diploma.tables.DdtXorXor;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import static ua.kpi.pti.diploma.Constants.Q;
 
 public class TablesProviderTest {
     private final int EXPECTED_SUM = Q;
-    DdtProvider provider = new DdtXorXor();
+    TableProvider provider = new DdtXorXor();
 
 
     @Test
@@ -19,7 +19,7 @@ public class TablesProviderTest {
         AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
         List<Integer> alpas = agafonovCriteriaFilter.filterByOptimalDifferentialCharacteristics(AgafonovCriteriaFilter.findAllPrimitiveElementsOfField());
         alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
-        int[][] matrix = provider.getDdt(alpas.get(0));
+        int[][] matrix = provider.getTable(alpas.get(0));
         for (int j = 0; j < matrix[0].length; j++) {
             int sum = 0;
             for (int i = 0; i < matrix[0].length; i++) {
@@ -37,7 +37,7 @@ public class TablesProviderTest {
         AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
         List<Integer> alpas = agafonovCriteriaFilter.filterByOptimalDifferentialCharacteristics(AgafonovCriteriaFilter.findAllPrimitiveElementsOfField());
         alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
-        int[][] matrix = provider.getDdt(alpas.get(0));
+        int[][] matrix = provider.getTable(alpas.get(0));
         for (int j = 0; j < matrix[0].length; j++) {
             int sum = 0;
             for (int i = 0; i < matrix[0].length; i++) {

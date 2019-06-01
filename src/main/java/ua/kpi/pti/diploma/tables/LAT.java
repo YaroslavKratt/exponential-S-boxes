@@ -1,4 +1,4 @@
-package ua.kpi.pti.diploma.ddt;
+package ua.kpi.pti.diploma.tables;
 
 import ua.kpi.pti.diploma.MatrixToCSVPrinter;
 
@@ -7,32 +7,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.Constants.PATH_TO_XOR_PLUS_FOLDER;
+import static ua.kpi.pti.diploma.Constants.PATH_TO_LAT;
 import static ua.kpi.pti.diploma.Constants.Q;
 import static ua.kpi.pti.diploma.Constants.allExponents;
 
-public class DdtXorPlus implements DdtProvider {
+public class LAT implements TableProvider {
     @Override
-    public int[][] getDdt(int basis) {
-        int[][] ddt = new int[Q][Q];
+    public int[][] getTable(int basis) {
+        int[][] lat = new int[Q][Q];
 
         for (int alpha = 0; alpha < Q; alpha++) {
             for (int x = 0; x < Q; x++) {
-                int out = (allExponents.get(basis).get(x ^ alpha) - allExponents.get(basis).get(x) + Q) % Q;
-                ddt[alpha][out] = (ddt[alpha][out] + 1) % Q;
+                int out = allExponents.get(basis).get(x ^ alpha) ^ allExponents.get(basis).get(x);
+                lat[alpha][out] = (lat[alpha][out] + 1) % Q;
             }
         }
-        return ddt;
+        return lat;
     }
 
     @Override
     public Map<Integer, Integer> calculateStatistics(List<Integer> basises) {
         Map<Integer, Integer> result = new HashMap<>();
         for (Integer basis : basises) {
-            int[][] ddt = getDdt(basis);
+            int[][] ddt = getTable(basis);
 
             try {
-                MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_XOR_PLUS_FOLDER + Integer.toHexString(basis) + "__XOR_PLUS.csv");
+                MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_LAT + Integer.toHexString(basis) + "__LAT.csv");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -42,6 +42,5 @@ public class DdtXorPlus implements DdtProvider {
             result.putIfAbsent(max, 0);
             result.put(max, result.get(max) + 1);
         }
-        return result;
-    }
+        return result;    }
 }

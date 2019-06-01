@@ -1,10 +1,10 @@
-package ua.kpi.pti.diploma.ddt;
+package ua.kpi.pti.diploma.tables;
 
 import java.util.List;
 import java.util.Map;
 
-public interface DdtProvider {
-    int[][] getDdt(int basis);
+public interface TableProvider {
+    int[][] getTable(int basis);
 
      default int maxInTable(int[][] matrix) {
         int max = 0;

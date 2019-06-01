@@ -14,10 +14,12 @@ public abstract class Constants {
     public static final GF2mField FIELD = new GF2mField(M);
     public static final String PATH_TO_XOR_XOR_FOLDER = ".\\DDT_XOR_XOR\\";
     public static final String PATH_TO_XOR_PLUS_FOLDER = ".\\DDT_XOR_PLUS\\";
-    public static final String PATH_TO_PLUS_PLUS_FOLDER = ".\\DIPLOMA\\Exponential_S_boxes\\DDT_PLUS_PLUS\\";
+    public static final String PATH_TO_PLUS_PLUS_FOLDER = ".\\DDT_PLUS_PLUS\\";
+    public static final String PATH_TO_LAT = ".\\LAT";
 
-    public static  Map<Integer, List<Integer>> allExponents = new HashMap<>();
-    static{
+    public static Map<Integer, List<Integer>> allExponents = new HashMap<>();
+
+    static {
         List<Integer> exponentsForCurrentBase;
         for (int base = 0; base < Q; base++) {
             exponentsForCurrentBase = new ArrayList<>();
