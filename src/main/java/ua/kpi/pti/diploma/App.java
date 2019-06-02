@@ -16,11 +16,12 @@ public class App {
         alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
 
 
-        tableProvidersPool.add(new DdtXorXor());
+        /*tableProvidersPool.add(new DdtXorXor());
         tableProvidersPool.add(new DdtXorPlus());
         tableProvidersPool.add(new DdtPlusPlus());
         tableProvidersPool.add(new LAT());
-        tableProvidersPool.add(new ElTable());
+        tableProvidersPool.add(new ElTable());*/
+        tableProvidersPool.add(new LambdaTable());
 
         List<Integer> finalAlpas = alpas;
         tableProvidersPool.forEach(tableProvider ->

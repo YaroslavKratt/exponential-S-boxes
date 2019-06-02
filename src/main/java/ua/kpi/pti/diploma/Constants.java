@@ -12,6 +12,7 @@ public abstract class Constants {
     public static final String PATH_TO_PLUS_PLUS_FOLDER = ".\\DDT_PLUS_PLUS\\";
     public static final String PATH_TO_LAT = ".\\LAT\\";
     public static final String PATH_TO_EL_TABLE = ".\\EL_TABLE\\";
+    public static final String PATH_TO_LAMBDA_TABLE = ".\\LAMBDA_TABLE\\";
     public static final int CORES = Runtime.getRuntime().availableProcessors();
 
     public static int[][] allExponents = new int[Q][Q];
