@@ -13,7 +13,7 @@ public class DdtPlusPlusThread extends TableThread {
     public void run() {
         for (int alpha = startAlpha; alpha < endAlpha; alpha++) {
             for (int x = 0; x < Q; x++) {
-                int out = (allExponents.get(basis).get((x + alpha + Q) % Q) - allExponents.get(basis).get(x) + Q) % Q;
+                int out = (allExponents[basis][(x + alpha + Q) % Q] - allExponents[basis][x] + Q) % Q;
                 table[alpha][out] = (table[alpha][out] + 1) % Q;
             }
         }

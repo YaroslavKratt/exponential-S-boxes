@@ -17,10 +17,12 @@ public class LatThread extends TableThread {
             for (int beta = 0; beta < Q; beta++) {
                 int sum = 0;
                 for (int x = 0; x < Q; x++) {
-                    int sBoxOut = allExponents.get(basis).get(x);
-                    sum += Math.pow(-1, scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, sBoxOut));
+                    int sBoxOut = allExponents[basis][x];
+                    if((scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, sBoxOut))==1) {
+                        sum ++;
+                    }
                 }
-                table[alpha][beta] = sum * sum;
+                table[alpha][beta] = (Q - 2*(sum))*(Q - 2*(sum));
             }
         }
 

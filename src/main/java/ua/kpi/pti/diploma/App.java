@@ -20,6 +20,7 @@ public class App {
         tableProvidersPool.add(new DdtXorPlus());
         tableProvidersPool.add(new DdtPlusPlus());
         tableProvidersPool.add(new LAT());
+        tableProvidersPool.add(new ElTable());
 
         List<Integer> finalAlpas = alpas;
         tableProvidersPool.forEach(tableProvider ->

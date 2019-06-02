@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static ua.kpi.pti.diploma.Constants.AR_WEIGHT;
+
 public class Utils {
 
     public static Set<Integer> decomposeNumberToPrimeMultipliers(int number) {
@@ -31,15 +33,9 @@ public class Utils {
         return s != 0;
     }
 
-    public static Integer scalarMultiplication(int number1, int number2) {
-        int sum =0;
-        for (int i = 7; i >= 0; i--) {
-            sum^=((number1>>i)&1)& ((number2>>i)&1);
-        }
-        return sum;
+    public static Integer scalarMultiplication(int a, int b) {
+        return AR_WEIGHT[a & b] & 1;
     }
-
-
 
 
 }

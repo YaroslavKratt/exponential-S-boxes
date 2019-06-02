@@ -47,6 +47,7 @@ public class LAT extends TableProvider {
     public String getTableName() {
         return tableName;
     }
+
     @Override
     protected List<TableThread> getThreadPool(int[][] table,int basis) {
         threadPool = new ArrayList<>();
