@@ -1,12 +1,8 @@
 package ua.kpi.pti.diploma;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static ua.kpi.pti.diploma.Constants.*;
 
 public class Utils {
 
@@ -35,41 +31,15 @@ public class Utils {
         return s != 0;
     }
 
-    public static int[] toBinaryArray(Integer number) {
-        String binary = Integer.toBinaryString(number);
-        String[] binaryStringArray = binary.split("");
-        binaryStringArray = addZeroes(binaryStringArray);
-        int[] binaryArray = new int[binaryStringArray.length];
-
-        for (int i = 0; i < binaryStringArray.length; i++) {
-            binaryArray[i] = Integer.parseInt(binaryStringArray[i]);
+    public static Integer scalarMultiplication(int number1, int number2) {
+        int sum =0;
+        for (int i = 7; i >= 0; i--) {
+            sum^=((number1>>i)&1)& ((number2>>i)&1);
         }
-        return binaryArray;
-
+        return sum;
     }
 
-    private static String[] addZeroes(String[] binaryArr) {
-        List<String> binList = Arrays.asList(binaryArr);
 
-        while (true) {
-            if (binaryArr.length < M) {
-                binList.add(0, "0");
-            } else {
-                break;
-            }
-        }
-
-        return binList.toArray(new String[0]);
-    }
-
-    Integer scalarMultiplication(int[] vector1, int[] vector2) {
-        int s = 0;
-
-        for (int i = 0; i < M; i++) {
-            s += vector1[i] * vector2[i];
-        }
-        return s;
-    }
 
 
 }

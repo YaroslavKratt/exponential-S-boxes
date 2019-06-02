@@ -1,27 +1,27 @@
 package ua.kpi.pti.diploma.tables;
 
 import ua.kpi.pti.diploma.MatrixToCSVPrinter;
+import ua.kpi.pti.diploma.tables.threads.DdtXorXorThread;
+import ua.kpi.pti.diploma.tables.threads.TableThread;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.Constants.PATH_TO_XOR_XOR_FOLDER;
-import static ua.kpi.pti.diploma.Constants.Q;
-import static ua.kpi.pti.diploma.Constants.allExponents;
+import static ua.kpi.pti.diploma.Constants.*;
 
-public class DdtXorXor implements TableProvider {
+public class DdtXorXor extends TableProvider {
+    String tableName = "DDT XOR XOR";
+
+
+
     @Override
     public int[][] getTable(int basis) {
         int[][] ddt = new int[Q][Q];
 
-        for (int alpha = 0; alpha < Q; alpha++) {
-            for (int x = 0; x < Q; x++) {
-                int out = allExponents.get(basis).get(x ^ alpha) ^ allExponents.get(basis).get(x);
-                ddt[alpha][out] = (ddt[alpha][out] + 1) % Q;
-            }
-        }
+        calculateWithMultiThreads(getThreadPool(ddt,basis));
         return ddt;
     }
 
@@ -43,5 +43,19 @@ public class DdtXorXor implements TableProvider {
             result.put(max, result.get(max) + 1);
         }
         return result;
+    }
+    public String getTableName() {
+        return tableName;
+    }
+    protected List<TableThread> getThreadPool(int[][]table,int basis) {
+        threadPool = new ArrayList<>();
+
+        threadPool.add(new DdtXorXorThread(table, 0, Q / CORES, basis));
+        threadPool.add(new DdtXorXorThread(table, Q / CORES, 2 * Q / CORES, basis));
+        threadPool.add(new DdtXorXorThread(table, 2 * Q / CORES, 3 * Q / CORES, basis));
+        threadPool.add(new DdtXorXorThread(table, 3 * Q / CORES, 4 * Q / CORES, basis));
+        threadPool.add(new DdtXorXorThread(table, 4 * Q / CORES, Q, basis));
+
+        return this.threadPool;
     }
 }
