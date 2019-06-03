@@ -1,8 +1,8 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.MatrixToCSVPrinter;
-import ua.kpi.pti.diploma.tables.threads.ElThread;
-import ua.kpi.pti.diploma.tables.threads.TableThread;
+import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.ElThread;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,17 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class ElTable extends TableProvider {
     String tableName = "El Table";
 
-    @Override
-    int[][] getTable(int basis) {
-        int[][] elTable = new int[Q][Q];
-        calculateWithMultiThreads(getThreadPool(elTable, basis));
-        return elTable;
-    }
+
 
     @Override
     public Map<Integer, Integer> calculateStatistics(List<Integer> basises) {
@@ -45,19 +40,16 @@ public class ElTable extends TableProvider {
 
 
     @Override
-    protected List<TableThread> getThreadPool(int[][] table, int basis) {
+    public List<TableThread> getThreadPool(int[][] table, int basis) {
         threadPool = new ArrayList<>();
-        threadPool.add(new ElThread(table, 0, Q / CORES, basis));
-        threadPool.add(new ElThread(table, Q / CORES, 2 * Q / CORES, basis));
-        threadPool.add(new ElThread(table, 2 * Q / CORES, 3 * Q / CORES, basis));
-        threadPool.add(new ElThread(table, 3 * Q / CORES, 4 * Q / CORES, basis));
-        threadPool.add(new ElThread(table, 4 * Q / CORES, Q, basis));
-
+        for (int i = 0; i < CORES; i++) {
+            threadPool.add(new ElThread(table, i, (i + 1) * Q / CORES, basis));
+        }
         return this.threadPool;
     }
 
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 }
 

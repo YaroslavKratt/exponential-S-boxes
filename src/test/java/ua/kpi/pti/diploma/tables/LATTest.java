@@ -2,10 +2,10 @@ package ua.kpi.pti.diploma.tables;
 
 
 import org.junit.Test;
-import ua.kpi.pti.diploma.Constants;
+import ua.kpi.pti.diploma.utils.Constants;
 
 import static java.lang.Math.pow;
-import static ua.kpi.pti.diploma.Constants.Q;
+import static ua.kpi.pti.diploma.utils.Constants.Q;
 
 public class LATTest {
 

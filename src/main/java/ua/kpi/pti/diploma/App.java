@@ -6,6 +6,8 @@ import ua.kpi.pti.diploma.tables.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.kpi.pti.diploma.utils.Constants.Q;
+
 public class App {
     public static void main(String[] args) {
         AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
@@ -16,19 +18,18 @@ public class App {
         alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
 
 
-        /*tableProvidersPool.add(new DdtXorXor());
+        tableProvidersPool.add(new DdtXorXor());
         tableProvidersPool.add(new DdtXorPlus());
         tableProvidersPool.add(new DdtPlusPlus());
         tableProvidersPool.add(new LAT());
-        tableProvidersPool.add(new ElTable());*/
+        tableProvidersPool.add(new ElTable());
         tableProvidersPool.add(new LambdaTable());
 
         List<Integer> finalAlpas = alpas;
+
         tableProvidersPool.forEach(tableProvider ->
                 new BarChartForTables()
-                        .printChart(tableProvider.calculateStatistics(finalAlpas),tableProvider.getTableName()));
+                        .printChart(tableProvider.calculateStatistics(finalAlpas), tableProvider.getTableName()));
     }
-
-
 }
 

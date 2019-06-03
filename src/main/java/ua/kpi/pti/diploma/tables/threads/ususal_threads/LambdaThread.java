@@ -1,11 +1,13 @@
-package ua.kpi.pti.diploma.tables.threads;
+package ua.kpi.pti.diploma.tables.threads.ususal_threads;
 
 import static java.lang.Math.abs;
-import static ua.kpi.pti.diploma.Constants.Q;
-import static ua.kpi.pti.diploma.Constants.allExponents;
-import static ua.kpi.pti.diploma.Utils.scalarMultiplication;
+import static ua.kpi.pti.diploma.utils.Constants.Q;
+import static ua.kpi.pti.diploma.utils.Constants.allExponents;
+import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class LambdaThread extends TableThread {
+
+
     public LambdaThread(int[][] lat, int startAlpha, int endAlpha, int basis) {
         super(lat, startAlpha, endAlpha, basis);
     }
@@ -25,7 +27,7 @@ public class LambdaThread extends TableThread {
                         n1 = n1 + (scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, allExponents[basis][(x + k) & 0xFF]));
                     }
                     for (int x = Q - k; x < Q; x++) {
-                        n2 = n2 + (scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, allExponents[basis][(x + k) & 0xFF]));
+                        n2 = n2 + (scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, allExponents[basis][(x+ k) & 0xFF]));
                     }
                     sum = abs(Q - k - 2 * n1) + abs(k - 2 * n2);
                     sumK = sumK + sum * sum;

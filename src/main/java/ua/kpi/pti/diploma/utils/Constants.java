@@ -1,4 +1,4 @@
-package ua.kpi.pti.diploma;
+package ua.kpi.pti.diploma.utils;
 
 import org.bouncycastle.pqc.math.linearalgebra.GF2mField;
 

@@ -1,8 +1,9 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.MatrixToCSVPrinter;
-import ua.kpi.pti.diploma.tables.threads.LatThread;
-import ua.kpi.pti.diploma.tables.threads.TableThread;
+import ua.kpi.pti.diploma.Type;
+import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.LatThread;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,26 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class LAT extends TableProvider {
     String tableName = "LAT";
 
 
     @Override
-    public int[][] getTable(int basis) {
-        int[][] lat = new int[Q][Q];
-
-        calculateWithMultiThreads(getThreadPool(lat,basis));
-        return lat;
-    }
-
-    @Override
-    public Map<Integer, Integer> calculateStatistics(List<Integer> basises) {
+    public Map<Integer, Integer> calculateStatistics(List<Integer> basises, Type type) {
         Map<Integer, Integer> result = new HashMap<>();
         for (Integer basis : basises) {
 
-            int[][] ddt = getTable(basis);
+            int[][] ddt = getTable(basis,type);
             try {
                 MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_LAT + Integer.toHexString(basis) + "__LAT.csv");
             } catch (IOException e) {
@@ -45,18 +38,25 @@ public class LAT extends TableProvider {
     }
 
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     @Override
-    protected List<TableThread> getThreadPool(int[][] table,int basis) {
+    public List<TableThread> getThreadPool(int[][] table, int basis, Type type) {
         threadPool = new ArrayList<>();
-        threadPool.add(new LatThread(table, 0, Q / CORES, basis));
-        threadPool.add(new LatThread(table, Q / CORES, 2 * Q / CORES, basis));
-        threadPool.add(new LatThread(table, 2 * Q / CORES, 3 * Q / CORES, basis));
-        threadPool.add(new LatThread(table, 3 * Q / CORES, 4 * Q / CORES, basis));
-        threadPool.add(new LatThread(table, 4 * Q / CORES, Q, basis));
+        if(type==Type.USUAL){
+            for (int i = 0; i < CORES; i++) {
+                threadPool.add(new LatThread(table, i, (i + 1) * Q / CORES, basis));
+            }
+        }
+
+        else {
+            for (int i = 0; i < CORES; i++) {
+                threadPool.add(new LatThread(table, i, (i + 1) * Q / CORES, basis));
+            }
+        }
 
         return this.threadPool;
     }
+
 }

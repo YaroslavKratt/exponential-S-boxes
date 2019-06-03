@@ -1,4 +1,4 @@
-package ua.kpi.pti.diploma.tables.threads;
+package ua.kpi.pti.diploma.tables.threads.ususal_threads;
 
 public abstract class TableThread extends Thread {
     protected  int[][] table;

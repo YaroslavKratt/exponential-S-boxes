@@ -1,13 +1,14 @@
 package ua.kpi.pti.diploma;
 
 import org.bouncycastle.pqc.math.linearalgebra.GF2mField;
+import ua.kpi.pti.diploma.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.pow;
-import static ua.kpi.pti.diploma.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class AgafonovCriteriaFilter {
     private final int k = (int) pow(P, M - 1);
