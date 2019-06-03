@@ -1,16 +1,25 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.tables.threads.TableThread;
+import ua.kpi.pti.diploma.SboxExtender;
+import ua.kpi.pti.diploma.Type;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
 
 import java.util.List;
 import java.util.Map;
+
+import static ua.kpi.pti.diploma.utils.Constants.Q;
 
 public abstract class TableProvider {
     protected String tableName;
     protected List<TableThread> threadPool;
 
 
-    abstract int[][] getTable(int basis);
+    public int[][] getTable(int basis,Type type) {
+        int[][] table = new int[Q][Q];
+
+        calculateWithMultiThreads(getThreadPool(table, basis,type));
+        return table;
+    }
 
     int maxInTable(int[][] matrix) {
         int max = 0;
@@ -24,7 +33,7 @@ public abstract class TableProvider {
         return max;
     }
 
-    void calculateWithMultiThreads( List<TableThread> threadPool) {
+    void calculateWithMultiThreads(List<TableThread> threadPool) {
         threadPool.forEach(TableThread::start);
 
         for (TableThread thread : threadPool) {
@@ -37,7 +46,7 @@ public abstract class TableProvider {
 
     }
 
-    public abstract Map<Integer, Integer> calculateStatistics(List<Integer> basises);
+    public abstract Map<Integer, Integer> calculateStatistics(List<Integer> basises, Type type);
 
 
     public String getTableName() {
@@ -45,5 +54,7 @@ public abstract class TableProvider {
     }
 
 
-    protected abstract List<TableThread> getThreadPool(int[][] table, int basis);
+    protected abstract List<TableThread> getThreadPool(int[][] table, int basis, Type type);
+
 }
+

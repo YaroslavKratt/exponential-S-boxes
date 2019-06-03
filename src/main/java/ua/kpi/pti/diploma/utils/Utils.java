@@ -1,10 +1,10 @@
-package ua.kpi.pti.diploma;
+package ua.kpi.pti.diploma.utils;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ua.kpi.pti.diploma.Constants.AR_WEIGHT;
+import static ua.kpi.pti.diploma.utils.Constants.AR_WEIGHT;
 
 public class Utils {
 

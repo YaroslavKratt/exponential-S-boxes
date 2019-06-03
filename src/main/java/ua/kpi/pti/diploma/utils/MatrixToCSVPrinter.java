@@ -1,4 +1,4 @@
-package ua.kpi.pti.diploma;
+package ua.kpi.pti.diploma.utils;
 
 import java.io.FileWriter;
 import java.io.IOException;

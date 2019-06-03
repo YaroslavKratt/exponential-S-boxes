@@ -1,8 +1,8 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.MatrixToCSVPrinter;
-import ua.kpi.pti.diploma.tables.threads.DdtPlusPlusThread;
-import ua.kpi.pti.diploma.tables.threads.TableThread;
+import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.DdtPlusPlusThread;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,18 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class DdtPlusPlus extends TableProvider {
     String tableName = "DDT PLUS PLUS";
 
-    @Override
-    public int[][] getTable(int basis) {
-        int[][] ddt = new int[Q][Q];
-
-        calculateWithMultiThreads(getThreadPool(ddt, basis));
-        return ddt;
-    }
 
     @Override
     public Map<Integer, Integer> calculateStatistics(List<Integer> basises) {
@@ -50,13 +43,10 @@ public class DdtPlusPlus extends TableProvider {
     @Override
     public List<TableThread> getThreadPool(int[][] table, int basis) {
         threadPool = new ArrayList<>();
-
-        threadPool.add(new DdtPlusPlusThread(table, 0, Q / CORES, basis));
-        threadPool.add(new DdtPlusPlusThread(table, Q / CORES, 2 * Q / CORES, basis));
-        threadPool.add(new DdtPlusPlusThread(table, 2 * Q / CORES, 3 * Q / CORES, basis));
-        threadPool.add(new DdtPlusPlusThread(table, 3 * Q / CORES, 4 * Q / CORES, basis));
-        threadPool.add(new DdtPlusPlusThread(table, 4 * Q / CORES, Q, basis));
-
+        for (int i = 0; i < CORES; i++) {
+            threadPool.add(new DdtPlusPlusThread(table, i, (i + 1) * Q / CORES, basis));
+        }
         return this.threadPool;
     }
+
 }

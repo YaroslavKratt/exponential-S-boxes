@@ -1,8 +1,8 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.MatrixToCSVPrinter;
-import ua.kpi.pti.diploma.tables.threads.LambdaThread;
-import ua.kpi.pti.diploma.tables.threads.TableThread;
+import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.LambdaThread;
+import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,17 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class LambdaTable extends TableProvider {
     String tableName = "LAMBDA TABLE";
-    @Override
-    int[][] getTable(int basis) {
-        int[][] llambdaTablet = new int[Q][Q];
 
-        calculateWithMultiThreads(getThreadPool(llambdaTablet,basis));
-        return llambdaTablet;
-    }
 
     @Override
     public Map<Integer, Integer> calculateStatistics(List<Integer> basises) {
@@ -45,19 +39,15 @@ public class LambdaTable extends TableProvider {
 
 
     @Override
-    protected List<TableThread> getThreadPool(int[][] table, int basis) {
+    public List<TableThread> getThreadPool(int[][] table, int basis) {
         threadPool = new ArrayList<>();
-
-        threadPool.add(new LambdaThread(table, 0, Q / CORES, basis));
-        threadPool.add(new LambdaThread(table, Q / CORES, 2 * Q / CORES, basis));
-        threadPool.add(new LambdaThread(table, 2 * Q / CORES, 3 * Q / CORES, basis));
-        threadPool.add(new LambdaThread(table, 3 * Q / CORES, 4 * Q / CORES, basis));
-        threadPool.add(new LambdaThread(table, 4 * Q / CORES, Q, basis));
-
+        for (int i = 0; i < CORES; i++) {
+            threadPool.add(new LambdaThread(table, i, (i + 1) * Q / CORES, basis));
+        }
         return this.threadPool;
     }
 
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 }
