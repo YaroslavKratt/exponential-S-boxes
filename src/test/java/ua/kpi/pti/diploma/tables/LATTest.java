@@ -1,15 +1,9 @@
 package ua.kpi.pti.diploma.tables;
 
 
-import org.junit.Test;
-import ua.kpi.pti.diploma.utils.Constants;
-
-import static java.lang.Math.pow;
-import static ua.kpi.pti.diploma.utils.Constants.Q;
-
 public class LATTest {
 
-
+/*
     @Test
     public void checkSumForRows() throws Exception {
         int[][] lat = new LAT().getTable(6);
@@ -43,6 +37,6 @@ public class LATTest {
             }
 
         }
-    }
+    }*/
 }
 

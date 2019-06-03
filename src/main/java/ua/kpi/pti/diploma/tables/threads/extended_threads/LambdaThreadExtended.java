@@ -9,13 +9,10 @@ import static ua.kpi.pti.diploma.utils.Constants.allExponents;
 import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class LambdaThreadExtended extends TableThread {
-    private int a;
-    private int b;
 
-    public LambdaThreadExtended(int[][] lat, int startAlpha, int endAlpha, int basis, int a, int b) {
+    public LambdaThreadExtended(int[][] lat, int startAlpha, int endAlpha, int basis) {
         super(lat, startAlpha, endAlpha, basis);
-        this.a = a;
-        this.b = b;
+
     }
 
     @Override
@@ -47,6 +44,5 @@ public class LambdaThreadExtended extends TableThread {
                 }
             }
         }
-
     }
 }

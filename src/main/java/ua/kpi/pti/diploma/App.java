@@ -6,8 +6,6 @@ import ua.kpi.pti.diploma.tables.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ua.kpi.pti.diploma.utils.Constants.Q;
-
 public class App {
     public static void main(String[] args) {
         AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
@@ -29,7 +27,7 @@ public class App {
 
         tableProvidersPool.forEach(tableProvider ->
                 new BarChartForTables()
-                        .printChart(tableProvider.calculateStatistics(finalAlpas), tableProvider.getTableName()));
+                        .printChart(tableProvider.calculateStatistics(finalAlpas,Type.EXTENDED), tableProvider.getTableName()));
     }
 }
 

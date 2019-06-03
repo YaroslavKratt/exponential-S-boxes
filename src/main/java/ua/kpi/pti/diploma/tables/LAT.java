@@ -1,9 +1,10 @@
 package ua.kpi.pti.diploma.tables;
 
 import ua.kpi.pti.diploma.Type;
-import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
+import ua.kpi.pti.diploma.tables.threads.extended_threads.LatThreadExtended;
 import ua.kpi.pti.diploma.tables.threads.ususal_threads.LatThread;
 import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
+import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class LAT extends TableProvider {
 
         else {
             for (int i = 0; i < CORES; i++) {
-                threadPool.add(new LatThread(table, i, (i + 1) * Q / CORES, basis));
+                threadPool.add(new LatThreadExtended(table, i, (i + 1) * Q / CORES, basis));
             }
         }
 
