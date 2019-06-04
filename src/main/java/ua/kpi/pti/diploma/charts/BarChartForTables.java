@@ -1,25 +1,30 @@
 package ua.kpi.pti.diploma.charts;
 
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
-import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
 public class BarChartForTables implements CustomBarChart<CategoryChart> {
+   private CategoryChart chart;
+   private String title;
 
-    public void printChart(Map<Integer, Integer> maxInTables, String title) {
+    public BarChartForTables(String title) {
+        this.title = title;
+    }
+
+    public BarChartForTables printChart(Map<Integer, Integer> maxInTables) {
         Integer[] max = maxInTables.keySet().toArray(new Integer[0]);
         Integer[] amountOfAlpha = maxInTables.values().toArray(new Integer[0]);
 
-        CategoryChart chart = new CategoryChartBuilder()
+      chart= new CategoryChartBuilder()
                 .width(800)
                 .height(600)
                 .title(title)
-                .xAxisTitle("Maximum")
-                .yAxisTitle("Number of alpha")
+                .xAxisTitle("Максимуми")
+                .yAxisTitle("Кількість експонент")
                 .build();
 
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
@@ -27,8 +32,15 @@ public class BarChartForTables implements CustomBarChart<CategoryChart> {
 
         chart.addSeries(title, Arrays.asList(max), Arrays.asList(amountOfAlpha));
         new SwingWrapper(chart).displayChart();
+        return this;
+    }
+    public void saveChart(String tybe) {
+        try {
+
+            BitmapEncoder.saveBitmap(chart, "./"+tybe+"__"+ title, BitmapEncoder.BitmapFormat.JPG);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-
-
 }

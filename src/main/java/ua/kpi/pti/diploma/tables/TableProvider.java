@@ -1,13 +1,16 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.SboxExtender;
 import ua.kpi.pti.diploma.Type;
-import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
+import ua.kpi.pti.diploma.tables.threads.DdtXorXorThread;
+import ua.kpi.pti.diploma.tables.threads.TableThread;
 
 import java.util.List;
 import java.util.Map;
 
-import static ua.kpi.pti.diploma.utils.Constants.Q;
+import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
+import static ua.kpi.pti.diploma.extender.SboxExtender.extendedSBox;
+import static ua.kpi.pti.diploma.utils.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.CORES;
 
 public abstract class TableProvider {
     protected String tableName;
@@ -16,9 +19,20 @@ public abstract class TableProvider {
 
     public int[][] getTable(int basis,Type type) {
         int[][] table = new int[Q][Q];
+        if (type == Type.USUAL) {
+            calculateWithMultiThreads(getThreadPool(table, sBoxUsusal[basis]));
 
-        calculateWithMultiThreads(getThreadPool(table, basis,type));
+
+        }
+        if (type == Type.EXTENDED) {
+            for (int a : aList) {
+                for (int b = 0; b < Q; b++) {
+                    calculateWithMultiThreads(getThreadPool(table,extendedSBox[basis][a][b]));
+                }
+            }
+        }
         return table;
+
     }
 
     int maxInTable(int[][] matrix) {
@@ -54,7 +68,8 @@ public abstract class TableProvider {
     }
 
 
-    protected abstract List<TableThread> getThreadPool(int[][] table, int basis, Type type);
+    protected abstract List<TableThread> getThreadPool(int[][] table,int[] sbox);
+
 
 }
 

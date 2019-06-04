@@ -1,13 +1,12 @@
-package ua.kpi.pti.diploma.tables.threads.ususal_threads;
+package ua.kpi.pti.diploma.tables.threads;
 
 import static ua.kpi.pti.diploma.utils.Constants.Q;
-import static ua.kpi.pti.diploma.utils.Constants.allExponents;
 
 public class DdtXorXorThread extends TableThread {
 
 
-    public DdtXorXorThread(int[][] lat, int startAlpha, int endAlpha, int basis) {
-        super(lat, startAlpha, endAlpha, basis);
+    public DdtXorXorThread(int[][] table, int startAlpha, int endAlpha, int[] sboxTable) {
+        super(table, startAlpha, endAlpha,sboxTable);
 
     }
 
@@ -15,7 +14,7 @@ public class DdtXorXorThread extends TableThread {
     public void run() {
         for (int alpha = startAlpha; alpha < endAlpha; alpha++) {
             for (int x = 0; x < Q; x++) {
-                int out = allExponents[basis][x ^ alpha] ^ allExponents[basis][x];
+                int out = sbox[x ^ alpha] ^ sbox[x];
                 table[alpha][out] = (table[alpha][out] + 1) &0xFF;
             }
         }

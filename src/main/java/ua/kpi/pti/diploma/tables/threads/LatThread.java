@@ -1,17 +1,13 @@
-package ua.kpi.pti.diploma.tables.threads.ususal_threads;
+package ua.kpi.pti.diploma.tables.threads;
 
 import static ua.kpi.pti.diploma.utils.Constants.Q;
-import static ua.kpi.pti.diploma.utils.Constants.allExponents;
 import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class LatThread extends TableThread {
 
 
-    private int b;
-    private int a;
-
-    public LatThread(int[][] lat, int startAlpha, int endAlpha, int basis) {
-        super(lat, startAlpha, endAlpha, basis);
+    public LatThread(int[][] lat, int startAlpha, int endAlpha, int[]sBox) {
+        super(lat, startAlpha, endAlpha, sBox);
     }
 
     @Override
@@ -20,7 +16,7 @@ public class LatThread extends TableThread {
             for (int beta = 0; beta < Q; beta++) {
                 int sum = 0;
                 for (int x = 0; x < Q; x++) {
-                    int sBoxOut = allExponents[basis][x];
+                    int sBoxOut = sbox[x];
                     if((scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, sBoxOut))==1) {
                         sum ++;
                     }

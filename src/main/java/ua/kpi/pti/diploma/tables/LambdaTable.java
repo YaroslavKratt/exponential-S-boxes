@@ -1,9 +1,8 @@
 package ua.kpi.pti.diploma.tables;
 
 import ua.kpi.pti.diploma.Type;
-import ua.kpi.pti.diploma.tables.threads.extended_threads.LambdaThreadExtended;
-import ua.kpi.pti.diploma.tables.threads.ususal_threads.LambdaThread;
-import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
+import ua.kpi.pti.diploma.tables.threads.LambdaThread;
+import ua.kpi.pti.diploma.tables.threads.TableThread;
 import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
 
 import java.io.IOException;
@@ -12,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ua.kpi.pti.diploma.extender.SboxExtender.*;
 import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class LambdaTable extends TableProvider {
@@ -24,12 +24,12 @@ public class LambdaTable extends TableProvider {
         double counter = 1;
         for (Integer basis : basises) {
             System.out.println((counter / basises.size()) * 100 + "%");
-            int[][] ddt = getTable(basis,type);
-            try {
+            int[][] ddt = getTable(basis, type);
+        /*    try {
                 MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_LAMBDA_TABLE + Integer.toHexString(basis) + "__LAMBDA_TABLE.csv");
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
             int max = maxInTable(ddt);
 
 
@@ -42,16 +42,11 @@ public class LambdaTable extends TableProvider {
 
 
     @Override
-    public List<TableThread> getThreadPool(int[][] table, int basis, Type type) {
+    public List<TableThread> getThreadPool(int[][] table, int[] sbox) {
         threadPool = new ArrayList<>();
-        if (type == Type.USUAL) {
-            for (int i = 0; i < CORES; i++) {
-                threadPool.add(new LambdaThread(table, i, (i + 1) * Q / CORES, basis));
-            }
-        } else {
-            for (int i = 0; i < CORES; i++) {
-                threadPool.add(new LambdaThreadExtended(table, i, (i + 1) * Q / CORES, basis));
-            }
+
+        for (int i = 0; i < CORES; i++) {
+            threadPool.add(new LambdaThread(table, i * Q / CORES, (i + 1) * Q / CORES, sbox));
         }
 
         return this.threadPool;

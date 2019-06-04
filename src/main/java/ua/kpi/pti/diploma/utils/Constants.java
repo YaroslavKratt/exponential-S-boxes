@@ -15,13 +15,13 @@ public abstract class Constants {
     public static final String PATH_TO_LAMBDA_TABLE = ".\\LAMBDA_TABLE\\";
     public static final int CORES = Runtime.getRuntime().availableProcessors();
 
-    public static int[][] allExponents = new int[Q][Q];
+    public static int[][] sBoxUsusal = new int[Q][Q];
     static {
         for (int base = 0; base < Q; base++) {
 
-           allExponents[base][0]=0; //S(0) = 0
+           sBoxUsusal[base][0]=0; //S(0) = 0
             for (int power = 1; power < Q; power++) {
-                allExponents[base][power]=FIELD.exp(base, power);
+                sBoxUsusal[base][power]=FIELD.exp(base, power);
             }
 
         }

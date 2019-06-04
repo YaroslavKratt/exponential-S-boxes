@@ -1,9 +1,8 @@
 package ua.kpi.pti.diploma.tables;
 
 import ua.kpi.pti.diploma.Type;
-import ua.kpi.pti.diploma.tables.threads.extended_threads.LatThreadExtended;
-import ua.kpi.pti.diploma.tables.threads.ususal_threads.LatThread;
-import ua.kpi.pti.diploma.tables.threads.ususal_threads.TableThread;
+import ua.kpi.pti.diploma.tables.threads.LatThread;
+import ua.kpi.pti.diploma.tables.threads.TableThread;
 import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
 
 import java.io.IOException;
@@ -12,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
+import static ua.kpi.pti.diploma.extender.SboxExtender.extendedSBox;
 import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class LAT extends TableProvider {
@@ -23,12 +24,12 @@ public class LAT extends TableProvider {
         Map<Integer, Integer> result = new HashMap<>();
         for (Integer basis : basises) {
 
-            int[][] ddt = getTable(basis,type);
-            try {
+            int[][] ddt = getTable(basis, type);
+         /*   try {
                 MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_LAT + Integer.toHexString(basis) + "__LAT.csv");
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
             int max = maxInTable(ddt);
 
 
@@ -43,18 +44,11 @@ public class LAT extends TableProvider {
     }
 
     @Override
-    public List<TableThread> getThreadPool(int[][] table, int basis, Type type) {
+    public List<TableThread> getThreadPool(int[][] table, int[] sbox) {
         threadPool = new ArrayList<>();
-        if(type==Type.USUAL){
-            for (int i = 0; i < CORES; i++) {
-                threadPool.add(new LatThread(table, i, (i + 1) * Q / CORES, basis));
-            }
-        }
 
-        else {
-            for (int i = 0; i < CORES; i++) {
-                threadPool.add(new LatThreadExtended(table, i, (i + 1) * Q / CORES, basis));
-            }
+        for (int i = 0; i < CORES; i++) {
+            threadPool.add(new LatThread(table, i * Q / CORES, (i + 1) * Q / CORES, sbox));
         }
 
         return this.threadPool;

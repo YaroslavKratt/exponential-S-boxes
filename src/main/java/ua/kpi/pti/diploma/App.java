@@ -1,6 +1,7 @@
 package ua.kpi.pti.diploma;
 
 import ua.kpi.pti.diploma.charts.BarChartForTables;
+import ua.kpi.pti.diploma.charts.CustomBarChart;
 import ua.kpi.pti.diploma.tables.*;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class App {
     public static void main(String[] args) {
         AgafonovCriteriaFilter agafonovCriteriaFilter = new AgafonovCriteriaFilter();
         List<TableProvider> tableProvidersPool = new ArrayList<>();
-
+        Type type = Type.EXTENDED;
         List<Integer> alpas = agafonovCriteriaFilter
                 .filterByOptimalDifferentialCharacteristics(AgafonovCriteriaFilter.findAllPrimitiveElementsOfField());
         alpas = agafonovCriteriaFilter.filterByMaximumAlgebraicDegree(alpas);
@@ -24,10 +25,10 @@ public class App {
         tableProvidersPool.add(new LambdaTable());
 
         List<Integer> finalAlpas = alpas;
-
-        tableProvidersPool.forEach(tableProvider ->
-                new BarChartForTables()
-                        .printChart(tableProvider.calculateStatistics(finalAlpas,Type.EXTENDED), tableProvider.getTableName()));
+        tableProvidersPool.forEach(tableProvider -> {
+            CustomBarChart chart = new BarChartForTables(tableProvider.getTableName());
+            chart.printChart(tableProvider.calculateStatistics(finalAlpas, type)).saveChart(type.toString());
+        });
     }
 }
 
