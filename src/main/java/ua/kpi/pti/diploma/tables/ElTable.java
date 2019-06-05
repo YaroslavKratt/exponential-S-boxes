@@ -12,33 +12,35 @@ import java.util.List;
 import java.util.Map;
 
 import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
-import static ua.kpi.pti.diploma.extender.SboxExtender.extendedSBox;
 import static ua.kpi.pti.diploma.utils.Constants.*;
+import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class ElTable extends TableProvider {
     String tableName = "El Table";
 
 
     @Override
-    public Map<Integer, Integer> calculateStatistics(List<Integer> basises, Type type) {
-        Map<Integer, Integer> result = new HashMap<>();
-        double counter = 1;
+    protected void calculate(int[][] table, int[] sbox) {
+        for (int alpha = 0; alpha < Q; alpha++) {
+            for (int beta = 0; beta < Q; beta++) {
+                int sum1 = 0;
 
-        for (Integer basis : basises) {
-            System.out.println((counter / basises.size()) * 100 + "%");
-            int[][] ddt = getTable(basis, type);
-           /* try {
-                MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_EL_TABLE + Integer.toHexString(basis) + "__EL_TABLE.csv");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-            int max = maxInTable(ddt);
-            result.putIfAbsent(max, 0);
-            result.put(max, result.get(max) + 1);
-            counter++;
+                for (int k = 0; k < Q; k++) {
+                    int sum2 = 0;
+
+                    for (int x = 0; x < Q; x++) {
+                        int sBoxOut = sbox[x];
+                        if((scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, sBoxOut))==1) {
+                            sum2 ++;
+                        }
+                    }
+                    sum1 += (Q - 2*(sum2))*(Q - 2*(sum2));
+                }
+                table[alpha][beta] = sum1;
+            }
         }
-        return result;
     }
+
 
 
     @Override

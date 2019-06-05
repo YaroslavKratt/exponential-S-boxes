@@ -11,42 +11,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.abs;
 import static ua.kpi.pti.diploma.extender.SboxExtender.*;
 import static ua.kpi.pti.diploma.utils.Constants.*;
+import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class LambdaTable extends TableProvider {
     String tableName = "LAMBDA TABLE";
 
 
     @Override
-    public Map<Integer, Integer> calculateStatistics(List<Integer> basises, Type type) {
-        Map<Integer, Integer> result = new HashMap<>();
-        double counter = 1;
-        for (Integer basis : basises) {
-            System.out.println((counter / basises.size()) * 100 + "%");
-            int[][] ddt = getTable(basis, type);
-        /*    try {
-                MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_LAMBDA_TABLE + Integer.toHexString(basis) + "__LAMBDA_TABLE.csv");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-            int max = maxInTable(ddt);
+    protected void calculate(int[][] table, int[] sbox) {
+        int n1, n2;
+        int sum, sumK;
+        for (int alpha = 0; alpha < Q; alpha++) {
+            for (int beta = 0; beta < Q; beta++) {
+                sumK = 0;
+                for (int k = 0; k < Q; k++) {
+                    n1 = 0;
+                    n2 = 0;
+                    for (int x = 0; x < Q - k; x++) {
+                        n1 = n1 + (scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, sbox[(x + k) & 0xFF]));
+                    }
+                    for (int x = Q - k; x < Q; x++) {
+                        n2 = n2 + (scalarMultiplication(alpha, x) ^ scalarMultiplication(beta, sbox[(x+ k) & 0xFF]));
+                    }
+                    sum = abs(Q - k - 2 * n1) + abs(k - 2 * n2);
+                    sumK = sumK + sum * sum;
 
-
-            result.putIfAbsent(max, 0);
-            result.put(max, result.get(max) + 1);
-            counter++;
+                }
+                table[alpha][beta] = sumK;
+            }
         }
-        return result;
+
     }
+
 
 
     @Override
     public List<TableThread> getThreadPool(int[][] table, int[] sbox) {
         threadPool = new ArrayList<>();
 
-        for (int i = 0; i < CORES; i++) {
-            threadPool.add(new LambdaThread(table, i * Q / CORES, (i + 1) * Q / CORES, sbox));
+        for (int i = 0; i < 7; i++) {
+            threadPool.add(new LambdaThread(table, i * Q / 7, (i + 1) * Q / 7, sbox));
         }
 
         return this.threadPool;

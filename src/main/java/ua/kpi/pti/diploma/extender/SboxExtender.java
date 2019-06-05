@@ -20,27 +20,27 @@ public class SboxExtender {
         }
     }
 
-    public static int[][][][] extendedSBox = new int[Q][Q][Q][Q];
+    private int[][][][] extendedSBox;
 
+    public int[][][][] getExtendedSBox() {
+        ArrayList<Thread> pool = new ArrayList<>();
 
-    static {
-        System.out.println("Started");
-        List<ExtenderThread> pool = new ArrayList<>();
-        for (int i = 0; i < CORES; i++) {
-            pool.add(new ExtenderThread(i * Q / CORES, (i + 1) * Q / CORES, extendedSBox, aList));
-        }
-        for (Thread t : pool) {
-            t.start();
-        }
-        for (Thread t : pool) {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (extendedSBox == null) {
+            extendedSBox = new int[Q][Q][Q][Q];
+            for (int i = 0; i < CORES; i++) {
+                pool.add(new ExtenderThread(i * Q / CORES, (i + 1) * Q / CORES,extendedSBox));
             }
+            pool.forEach(Thread::start);
+
+            for (Thread t : pool) {
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("FINISHED INIT");
         }
-        System.out.println("Finished");
-
+        return extendedSBox;
     }
-
 }

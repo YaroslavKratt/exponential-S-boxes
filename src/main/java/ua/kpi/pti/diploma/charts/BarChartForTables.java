@@ -27,7 +27,7 @@ public class BarChartForTables implements CustomBarChart<CategoryChart> {
                 .yAxisTitle("Кількість експонент")
                 .build();
 
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        //chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
         chart.getStyler().setHasAnnotations(true);
 
         chart.addSeries(title, Arrays.asList(max), Arrays.asList(amountOfAlpha));

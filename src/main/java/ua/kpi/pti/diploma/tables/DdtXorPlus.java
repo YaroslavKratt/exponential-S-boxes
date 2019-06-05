@@ -12,31 +12,24 @@ import java.util.List;
 import java.util.Map;
 
 import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
-import static ua.kpi.pti.diploma.extender.SboxExtender.extendedSBox;
 import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class DdtXorPlus extends TableProvider {
     String tableName = "DDT XOR PLUS";
 
 
-
     @Override
-    public Map<Integer, Integer> calculateStatistics(List<Integer> basises, Type type) {
-        Map<Integer, Integer> result = new HashMap<>();
-        for (Integer basis : basises) {
-            int[][] ddt = getTable(basis, type);
-
-          /*  try {
-                MatrixToCSVPrinter.printMatrixToCSV(ddt, PATH_TO_XOR_PLUS_FOLDER + Integer.toHexString(basis) + "__XOR_PLUS.csv");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-            int max = maxInTable(ddt);
-            result.putIfAbsent(max, 0);
-            result.put(max, result.get(max) + 1);
+    protected void calculate(int[][] table, int[] sbox) {
+        for (int alpha = 0; alpha < Q; alpha++) {
+            for (int x = 0; x < Q; x++) {
+                int out = (sbox[x ^ alpha] - sbox[x] + Q) & 0xFF;
+                table[alpha][out] = (table[alpha][out] + 1) & 0xFF;
+            }
         }
-        return result;
     }
+
+
+
 
     public String getTableName() {
         return tableName;
