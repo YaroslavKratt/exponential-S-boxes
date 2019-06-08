@@ -16,7 +16,7 @@ import static ua.kpi.pti.diploma.utils.Constants.*;
 import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class ElTable extends TableProvider {
-    String tableName = "El Table";
+    String tableName = "El_Table";
 
 
     @Override

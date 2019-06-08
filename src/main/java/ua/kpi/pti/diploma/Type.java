@@ -1,4 +1,5 @@
 package ua.kpi.pti.diploma;
 
-public enum Type {EXTENDED,USUAL;
+public enum Type {
+    AFFINE_ON_ENTER,AFFINE_ON_EXIT, USUAL;
 }

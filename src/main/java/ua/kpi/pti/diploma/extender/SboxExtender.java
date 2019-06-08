@@ -1,5 +1,7 @@
 package ua.kpi.pti.diploma.extender;
 
+import ua.kpi.pti.diploma.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,27 +22,38 @@ public class SboxExtender {
         }
     }
 
-    private int[][][][] extendedSBox;
+    private static int[][][][] extendedSBox;
 
-    public int[][][][] getExtendedSBox() {
+    public int[][][][] getExtendedSBox(Type type) {
         ArrayList<Thread> pool = new ArrayList<>();
 
         if (extendedSBox == null) {
             extendedSBox = new int[Q][Q][Q][Q];
-            for (int i = 0; i < CORES; i++) {
-                pool.add(new ExtenderThread(i * Q / CORES, (i + 1) * Q / CORES,extendedSBox));
-            }
-            pool.forEach(Thread::start);
-
-            for (Thread t : pool) {
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            if (type == Type.AFFINE_ON_ENTER) {
+                for (int i = 0; i < CORES; i++) {
+                    pool.add(new AffineOnEnterThread(i * Q / CORES, (i + 1) * Q / CORES, extendedSBox));
                 }
             }
-            System.out.println("FINISHED INIT");
+            if (type == Type.AFFINE_ON_EXIT) {
+                for (int i = 0; i < CORES; i++) {
+                    pool.add(new AfineOnExitThread(i * Q / CORES, (i + 1) * Q / CORES, extendedSBox));
+                }
+            }
+            threadWork(pool);
         }
         return extendedSBox;
+    }
+
+    private void threadWork(ArrayList<Thread> pool) {
+        pool.forEach(Thread::start);
+
+        for (Thread t : pool) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("FINISHED INIT");
     }
 }

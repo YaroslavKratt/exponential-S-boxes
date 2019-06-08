@@ -7,5 +7,5 @@ import java.util.Map;
 public interface CustomBarChart<C extends Chart<?, ?>> {
 
 
-   BarChartForTables printChart(Map<Integer, Integer> maxInTables);
+   BarChartForTables printChart(Map<String, String> maxInTables);
 }

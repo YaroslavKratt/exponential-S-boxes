@@ -15,7 +15,7 @@ import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
 import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class DdtXorPlus extends TableProvider {
-    String tableName = "DDT XOR PLUS";
+    String tableName = "DDT_XOR_PLUS";
 
 
     @Override

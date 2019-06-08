@@ -17,7 +17,7 @@ import static ua.kpi.pti.diploma.utils.Constants.*;
 import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class LambdaTable extends TableProvider {
-    String tableName = "LAMBDA TABLE";
+    String tableName = "LAMBDA_TABLE";
 
 
     @Override

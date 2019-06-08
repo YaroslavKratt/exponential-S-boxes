@@ -1,21 +1,16 @@
 package ua.kpi.pti.diploma.tables;
 
 import ua.kpi.pti.diploma.Type;
-import ua.kpi.pti.diploma.extender.ExtenderThread;
 import ua.kpi.pti.diploma.extender.SboxExtender;
-import ua.kpi.pti.diploma.tables.threads.DdtXorXorThread;
-import ua.kpi.pti.diploma.tables.threads.LambdaThread;
 import ua.kpi.pti.diploma.tables.threads.TableThread;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
 import static ua.kpi.pti.diploma.utils.Constants.*;
-import static ua.kpi.pti.diploma.utils.Constants.CORES;
 
 public abstract class TableProvider {
     protected String tableName;
@@ -67,7 +62,7 @@ public abstract class TableProvider {
     public Map<Integer, Integer> calculateStatistics(List<Integer> basises, Type type)  {
         Map<Integer, Integer> statistics = new ConcurrentHashMap<>();
         List<Thread> threadPool = new ArrayList<>();
-        ex.getExtendedSBox();
+        ex.getExtendedSBox(type);
         if (type == Type.USUAL) {
 
             for (int i = 0; i < basises.size(); i = i + 8) {
@@ -96,20 +91,21 @@ public abstract class TableProvider {
         }
         threadPool = new ArrayList<>();
 
-        if (type == Type.EXTENDED) {
+        if (type == Type.AFFINE_ON_ENTER||type==Type.AFFINE_ON_EXIT) {
             for (int b = 0; b < Q; b++) {
                 for (int a : aList) {
                     for (int i = 0; i < basises.size(); i++) {
                         int finalI = i;
                         int finalB = b;
-                        threadPool.add(new Thread(() -> multithread(statistics, ex.getExtendedSBox()[finalB][a][basises.get(finalI)])));
+                        threadPool.add(new Thread(() -> multithread(statistics, ex.getExtendedSBox(type)[finalB][a][basises.get(finalI)])));
 
                     }}}
-                        for (int j = 0; j <= threadPool.size(); j++) {
+                        for (int j = 0; j < threadPool.size(); j++) {
+                            System.out.println((double)j/threadPool.size()*100);
                             List<Thread> pool = new ArrayList<>();
                             threadPool.get(j).start();
                             pool.add(threadPool.get(j));
-                            if ((j+1) % 7 == 0) {
+                            if ((j+1) % 11 == 0) {
                                 for (Thread p : pool) {
                                     try {
                                         p.join();
@@ -119,12 +115,7 @@ public abstract class TableProvider {
                                 }
                             }
                         }
-
                     }
-
-
-
-
         return statistics;
 }
 

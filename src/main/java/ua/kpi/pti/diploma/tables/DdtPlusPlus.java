@@ -13,7 +13,7 @@ import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
 import static ua.kpi.pti.diploma.utils.Constants.*;
 
 public class DdtPlusPlus extends TableProvider {
-    String tableName = "DDT PLUS PLUS";
+    String tableName = "DDT_PLUS_PLUS";
 
 
     @Override
