@@ -1,19 +1,13 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.Type;
 import ua.kpi.pti.diploma.tables.threads.LambdaThread;
 import ua.kpi.pti.diploma.tables.threads.TableThread;
-import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static java.lang.Math.abs;
-import static ua.kpi.pti.diploma.extender.SboxExtender.*;
-import static ua.kpi.pti.diploma.utils.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.Q;
 import static ua.kpi.pti.diploma.utils.Utils.scalarMultiplication;
 
 public class LambdaTable extends TableProvider {

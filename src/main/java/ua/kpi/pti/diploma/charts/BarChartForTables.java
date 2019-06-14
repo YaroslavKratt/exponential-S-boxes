@@ -1,8 +1,9 @@
 package ua.kpi.pti.diploma.charts;
 
-import org.knowm.xchart.*;
-import org.knowm.xchart.style.Styler;
-import ua.kpi.pti.diploma.telegram_bot.StatisticSenderBot;
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.SwingWrapper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -45,9 +46,5 @@ public class BarChartForTables implements CustomBarChart<CategoryChart> {
         }
         return this;
 
-    }
-
-    public String getPath() {
-        return chartPath + ".jpg";
     }
 }

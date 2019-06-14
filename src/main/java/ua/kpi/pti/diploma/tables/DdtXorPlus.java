@@ -1,18 +1,13 @@
 package ua.kpi.pti.diploma.tables;
 
-import ua.kpi.pti.diploma.Type;
 import ua.kpi.pti.diploma.tables.threads.DdtXorPlusThread;
 import ua.kpi.pti.diploma.tables.threads.TableThread;
-import ua.kpi.pti.diploma.utils.MatrixToCSVPrinter;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static ua.kpi.pti.diploma.extender.SboxExtender.aList;
-import static ua.kpi.pti.diploma.utils.Constants.*;
+import static ua.kpi.pti.diploma.utils.Constants.CORES;
+import static ua.kpi.pti.diploma.utils.Constants.Q;
 
 public class DdtXorPlus extends TableProvider {
     String tableName = "DDT_XOR_PLUS";

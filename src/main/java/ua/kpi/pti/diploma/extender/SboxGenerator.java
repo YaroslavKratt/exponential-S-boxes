@@ -9,8 +9,10 @@ import java.util.List;
 import static org.apache.commons.math3.util.ArithmeticUtils.gcd;
 import static ua.kpi.pti.diploma.utils.Constants.*;
 import static ua.kpi.pti.diploma.utils.Constants.CORES;
-
-public class SboxExtender {
+/**
+ * This class will generate  exponential S-boxes with required type
+ */
+public class SboxGenerator {
     public static List<Integer> aList;
 
     static {
